@@ -2,23 +2,44 @@
 session_start();
 
 require_once '../../BusinessServicesLayer/petController/petController.php';
+require_once '../../BusinessServicesLayer/orderController/orderController.php';
 
+$pet_idd = $_GET["pet_id"];
 $pet = new petController();
+$order = new orderController();
+$cus_id = $_SESSION["id"];
+
+$data = $pet->pet_viewProduct($pet_idd);
+$data2 = $pet->pet_viewImgProduct($pet_idd);
+$data3 = $pet->pet_viewProduct($pet_idd);
+$data4 = $pet->pet_viewImgProduct($pet_idd);
+$data5 = $pet->pet_viewProduct($pet_idd);
 
 if(!isset($_SESSION["loggedin"])){
   header("location: ../../ApplicationLayer/Home/Homepage.php");
   exit;
 }
 
-if(isset($_POST["variation"])){
-  $pet->pet_getVariation();  
+$value = isset($_POST['quantity']) ? $_POST['quantity'] : 1; 
+if(isset($_POST['incqty'])){
+   $value += 1;
 }
 
+if(isset($_POST['decqty']) && $_POST['quantity'] > 0){
+   $value -= 1;                                            
+}
+else if(isset($_POST['decqty']) && $_POST['quantity'] == 0){
+   $value = 0;                                            
+}
+
+if(isset($_POST['addcart'])){
+  $order->addCart($cus_id);
+}
 ?>
 <html>
 <head>
-  <title>Pet Variation</title>
-  <link href="../../css/design.css" rel="stylesheet" >
+  <title>Product</title>
+  <link href="../../css/design.css" rel="stylesheet">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -33,10 +54,44 @@ if(isset($_POST["variation"])){
         $(".cus_form").hide(); 
       } 
     }); 
+    
+    function goBack() {
+      window.history.back();
+    }
 
-  </script>
+    function openModal() {
+      document.getElementById("myModal").style.display = "block";
+    }
+
+    function closeModal() {
+      document.getElementById("myModal").style.display = "none";
+    }
+
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    function plusSlides(n) {
+      showSlides(slideIndex += n);
+    }
+
+    function currentSlide(n) {
+      showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      if (n > slides.length) {slideIndex = 1}
+      if (n < 1) {slideIndex = slides.length}
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";
+      }
+      slides[slideIndex-1].style.display = "block";
+    }
+  </script> 
 </head>
 <body bgcolor="#ffcccc">
+<form action="" method="POST">
   <table id="top" height="9%" width="100%">
     <tr>
       <th align="left" height="5%" valign="top" width="25%"> <img src="../../images/GUIImages/courier.png" width="25" height="25"> Speeda</th>
@@ -62,20 +117,110 @@ if(isset($_POST["variation"])){
       <td align="center">Welcome <?=$_SESSION['name']?>! (Customer)</td>
     </tr>
   </table>
-  <form action="" method="POST">
-  <table id="detail" width="100%" height="70%" align="center">
-    <tr>
-      <td colspan="2" align="center"><h3>Pet Variation</h3></td>
+  <table id="detail" width="80%" height="80%" align="center">
+      <?php
+      foreach($data as $row){ 
+        $image = $row['pet_coverpath'];
+        $image_src = "../../images/PetImages/".$image;
+      ?>
+      
+    <tr style="height: 90%"><hr>
+      <td><table style="height: 85%;" align="center">
+        <tr>
+          <td valign="top">
+             <div class="row">
+              <div class="column">
+                <img src='<?php echo $image_src?>' style="width:100px;height:100px" onclick="openModal();currentSlide(1)" class="hover-shadow cursor"><br><br>
+                <?php } ?>
+                <?php
+                $i = 2;
+                foreach($data2 as $row){
+                  $image2 = $row['imgpath'];
+                  $image_src2 = "../../images/PetImages/".$image2;
+
+                  if($i%5 == 0){
+                    echo "<img src='$image_src2' style='width:100px;height:100px' onclick='openModal();currentSlide($i)' class='hover-shadow cursor'> <br>";
+                  }
+                  else{
+                    echo "<img src='$image_src2' style='width:100px;height:100px' onclick='openModal();currentSlide($i)' class='hover-shadow cursor'>";
+                  }
+                  $i++;
+                }
+                ?>
+              </div>
+            </div>
+
+            <div id="myModal" class="modal">
+              <span class="close cursor" onclick="closeModal()">&times;</span>
+              <div class="modal-content">
+
+              <div class="mySlides">
+                <?php
+                foreach($data3 as $row){
+                  $image = $row['pet_coverpath'];
+                  $image_src = "../../images/PetImages/".$image;
+                  echo "<img src='$image_src' style='width:100%'>";
+                }
+                ?>
+              </div>
+
+              
+                <?php  
+                foreach($data4 as $row){
+                  $image2 = $row['imgpath'];
+                  $image_src2 = "../../images/PetImages/".$image2;
+                  echo "<div class='mySlides'><img src='$image_src2' style='width:100%'> </div>";
+                } ?>
+    
+              <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+              <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table></td>
+      <form action="" method="POST"><td style="width: 55%"><table style="height: 100%">
+        <?php
+      foreach($data5 as $row){ 
+        if($row['pet_variation'] == "Food"){
+          $show_variation = "Pet Food";
+        }
+        else if($row['pet_variation'] == "Toy"){
+          $show_variation = "Pet Toy";
+        }
+
+      ?>
+        <tr><input type="hidden" name="id" size="30" value="<?php echo $row['pet_id']?>"><input type="hidden" name="sp_id" size="30" value="<?php echo $row['sp_id']?>"><input type="hidden" name="imgpath" size="30" value="<?php echo $row['pet_coverpath']?>"><input type="hidden" name="type" size="30" value="Pet">
+          <td width="20%">Product Name </td>
+          <td>: <?=$row['pet_name']?> <input type="hidden" name="name" size="30" value="<?php echo $row['pet_name']?>"></td>
+        </tr>
+        <tr>
+          <td>Product Price</td>
+          <td>: RM <?=$row['pet_price']?> <input type="hidden" name="price" size="30" value="<?php echo $row['pet_price']?>"> </td>    
+        </tr>
+        <tr>
+          <td>Quantity</td>
+          <td>: <button name='decqty'>-</button>
+        <input type='text' size='1' name='quantity' value='<?= $value; ?>'/>
+        <button name='incqty'>+</button>&nbsp; &nbsp; <?=$row["pet_quantity"]?> Available</td>
+        </tr>
+        <tr>
+          <td>Variation</td>
+          <td>: <?=$show_variation?></td>
+        </tr>
+        <tr>
+          <td>Product Details</td>
+          <td>: <?=$row['pet_detail']?></td>
+        </tr>
+      </table></td>
     </tr>
-    <tr align="center" style="height: 90%"> <hr>
-      <td><button type="submit" name="variation" value="Food" style="width: 120px;height: 120px">Pet Food <br> <br> <img src="../../images/GUIImages/dog-food.png" style="width:50px;height:50px;border:0"/>  </button></td>
-      <td><button type="submit" name="variation" value="Toy" style="width: 120px;height: 120px">Pet Toy <br> <br> <img src="../../images/GUIImages/toy.png" style="width:50px;height:50px;border:0"/>  </button></td>
-    </tr>
-    <tr>
-      <td colspan="2"><button type="button" name="back" onclick="window.location.href='../ManageUser/CustomerHomepage.php'"> Back </button></td>
+    <tr style="border-top: 1px solid black">
+      <td><button type="button" name="back" onclick="window.location.href='ViewProduct.php?pet_variation=<?php echo $row['pet_variation']?>'"> Back </button></td>
+        <?php }?>
+      <td width="50%" align="right"><input type="submit" id="submit_btn" name="addcart" value="Add to cart"></td></form>
     </tr>
   </table>
-  </form>
   <table id="bottom" height="15%" width="100%">
     <tr> <hr>
       <td valign="center" rowspan="2" width="10%">
@@ -112,6 +257,7 @@ if(isset($_POST["variation"])){
       <td align="center" colspan="4"> Speeda Sdn.Bhd (1234567-T) &#169; All Rights Reserved</td> 
     </tr>
   </table>
+  </form>
 </body>
 </html>
 
