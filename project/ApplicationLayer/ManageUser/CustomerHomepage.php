@@ -82,8 +82,13 @@ if(!isset($_SESSION["loggedin"])){
           <span class="dot"></span> 
       </div></td>
     </tr>
+    <!-- Variation Navigation -->
     <tr align="center"> <hr>
-      <td><button type="button" style="width: 120px;height: 120px" onclick="window.location.href='../ManageFoodDelivery/FoodVariation.php'"> Food <br> <br> <img src="../../images/GUIImages/food.png" style="width:50px;height:50px;border:0"/>  </button></td>
+      <form action="../ManageFoodDelivery/ViewProduct.php" method="POST">
+      <td><button type="submit" name="variation" value="Biscuits" style="width: 
+      120px;height: 120px"> Food <br> <br> <img src="../../images/GUIImages/food.png" style="width:50px;height:50px;border:0"/>  </button></td>
+      </form>
+
       <td><button type="button" style="width: 120px;height: 120px" onclick="window.location.href='../ManageGoodsDelivery/GoodsVariation.php'"> Goods <br> <br> <img src="../../images/GUIImages/groceries.png" style="width:50px;height:50px;border:0"/>  </button></td>
       <td><button type="button" style="width: 120px;height: 120px" onclick="window.location.href='../ManagePetAssist/PetVariation.php'"> Pet <br> <br> <img src="../../images/GUIImages/pet-food.png" style="width:50px;height:50px;border:0"/>  </button></td>
       <td><button type="button" style="width: 120px;height: 120px" onclick="window.location.href='../ManageMedicineDelivery/MedVariation.php'"> Medicine <br> <br> <img src="../../images/GUIImages/medicine.png" style="width:50px;height:50px;border:0"/>  </button></td>

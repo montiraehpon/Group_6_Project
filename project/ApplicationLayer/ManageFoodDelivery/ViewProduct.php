@@ -17,6 +17,7 @@ if(isset($_POST['getData'])){
   exit;
 }
 
+// Load food in the database based on the variation selected in FoodVariation PHP File
 $fd_variationn = $_GET['fd_variation'];
 
 if($fd_variationn == "Biscuits"){
@@ -26,7 +27,7 @@ else if($fd_variationn == "Noodles"){
   $name = "Noodles";
 }
 else if($fd_variationn == "Chips"){
-  $name = "Potato Chips & Crips";
+  $name = "Potato Chips & Crisps";
 }
 else if($fd_variationn == "Fruits"){
   $name = "Dry Fruits & Nuts";
@@ -51,7 +52,7 @@ else if($fd_variationn == "Others"){
       <th align="right"> <button type="button" id="cus_button" style="border:transparent;background:none;">
                 <img src="../../images/GUIImages/user.png" style="width:20px;height:20px;border:0"/></button> 
       </th>
-
+      <!-- Customer Navigation Bar -->
       <div class="cus_form">
         <form action="/action_page.php" class="form-container">
           <a href="../ManageUser/CustomerProfile.php"> <img src="../../images/GUIImages/gear.png" style="width:20px;border:0;vertical-align: middle;"/> My Account </a> <br>
@@ -69,26 +70,52 @@ else if($fd_variationn == "Others"){
       <td align="center">Welcome <?=$_SESSION['name']?>! (Customer)</td>
     </tr>
   </table>
-  <table width="100%" height="80%" align="center">
+
+  	<!-- Food Navigation Bar -->
+  	<form action="ViewProduct.php" method="POST" >
+  	<table id="detail" align="center">
+    <tr align="center" style="height: 90%"> <hr>
+      	<td><button type="submit" name="variation" value="Biscuits" style="width: 120px;height: 120px"> <img src="../../images/GUIImages/biscuit.png" style="width:50px;height:50px;border:0"/> <br> <br> Biscuits & Crackers </button></td>
+     	<td><button type="submit" name="variation" value="Noodles" style="width: 120px;height: 120px"> <img src="../../images/GUIImages/ramen.png" style="width:50px;height:50px;border:0"/> <br> <br> Noodles </button></td>
+      	<td><button type="submit" name="variation" value="Chips" style="width: 120px;height: 120px"> <img src="../../images/GUIImages/snacks.png" style="width:50px;height:50px;border:0"/> <br> <br> Potato Chips & Crisps </button></td> 
+      	<td><button type="submit" name="variation" value="Fruits" style="width: 120px;height: 120px"> <img src="../../images/GUIImages/nuts.png" style="width:50px;height:50px;border:0"/> <br> <br> Dry Fruits & Nuts </button></td>
+      	<td><button type="submit" name="variation" value="Others" style="width: 120px;height: 120px"> <img src="../../images/GUIImages/canned-food.png" style="width:50px;height:50px;border:0"/> <br> <br> Others </button></td>
+    </tr>
+	</table>
+
+	<?php  
+	if(isset($_POST["variation"])){
+  	$food->food_getVariation();  
+	}
+	?>
+  
+	</form>
+
+  	<table width="100%" align="center">
     <tr> <hr>
-      <th align="center" colspan="3"><h2><?=$name?></h2> <input type="hidden" id="variation" value="<?=$fd_variationn?>"></th>
+    	<th align="center" colspan="3"><h2><?=$name?></h2> <input type="hidden" id="variation" value="<?=$fd_variationn?>"></th>
     </tr>
     <tr>
-      <td><img src="../../images/GUIImages/arrows.png" onclick="window.location.href='FoodVariation.php'" style="width: 25px;height: 25px"></td>
-      <td align="right">Price: <select id="price">
-          <option value="none">None</option>
-          <option value="asc">Low to High</option>
-          <option value="desc">High to low</option>
-          </select></td>
-      <td align="center">Search: <input type="text" size="20" id="search_box" placeholder="Search name here"></td>
+    	<!-- Back Button -->
+    	<td><img src="../../images/GUIImages/arrows.png" onclick="window.location.href='../ManageUser/CustomerHomepage.php'" style="width: 25px;height: 25px"></td>
+      
+      	<!-- Filter for Price -->
+      	<td align="right">Price: <select id="price">
+        	<option value="none">None</option>
+        	<option value="asc">Low to High</option>
+        	<option value="desc">High to low</option>
+        	</select></td>
+        <!-- Search Box -->
+      	<td align="center">Search: <input type="text" size="20" id="search_box" placeholder="Search food name here"></td>
     </tr>
     <tr>
-      <td colspan="3" style="height: auto">
+      	<td colspan="3" style="height: auto">
         <div id="food_product"></div>
       </td>
     </tr>
-  </table>
-  <table id="bottom" height="15%" width="100%">
+  	</table>
+  	<!-- Webpage Footer -->
+  	<table id="bottom" height="15%" width="100%">
     <tr> <hr>
       <td valign="center" rowspan="2" width="10%">
         <ul style="list-style-type:none;">
@@ -108,6 +135,7 @@ else if($fd_variationn == "Others"){
       </td>
       <td align="center" width="25%" valign="bottom"> Follow us in </td>
     </tr>
+    <!-- Social Media -->
     <tr>
       <td align="center" width="25%">
         <button type="button" style="border:transparent;background:none;" onclick="location.href='http://www.facebook.com'">
@@ -127,6 +155,8 @@ else if($fd_variationn == "Others"){
   </form>
 </body>
 </html>
+
+<!-- Script to load food variation -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -184,3 +214,5 @@ else if($fd_variationn == "Others"){
     });
 
   </script>
+
+
