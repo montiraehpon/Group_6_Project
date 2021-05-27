@@ -20,17 +20,30 @@ if(!isset($_SESSION["loggedin"])){
   exit;
 }
 
+
 $value = isset($_POST['quantity']) ? $_POST['quantity'] : 1; 
 if(isset($_POST['incqty'])){
-   $value += 1;
+   $max=$_POST['maxquantity']; 
+   if($_POST['quantity'] <= $max){
+    $value += 1;
+    if ($value > $max)
+    {
+      $value=$max;
+      echo '<script>alert("Sorry. You already reach the maximum quantity of this product.")</script>';
+    }
+   }                                         
 }
 
+
+
 if(isset($_POST['decqty']) && $_POST['quantity'] > 0){
-   $value -= 1;                                            
+   $value -= 1; 
+   if ($_POST['quantity'] == 1){ 
+   $value=1;  
+   echo '<script>alert("Sorry. You already reach the minimum quantity of this product.")</script>';    
+   }                                    
 }
-else if(isset($_POST['decqty']) && $_POST['quantity'] == 0){
-   $value = 0;                                            
-}
+
 
 if(isset($_POST['addcart'])){
   $order->addCart($cus_id);
@@ -105,7 +118,7 @@ if(isset($_POST['addcart'])){
           <a href="../ManageUser/CustomerProfile.php"> <img src="../../images/GUIImages/gear.png" style="width:20px;border:0;vertical-align: middle;"/> My Account </a> <br>
           <a href="../ManagePayment/ViewCart.php"> <img src="../../images/GUIImages/supermarket.png" style="width:20px;border:0;vertical-align: middle;"/> My Cart </a> <br>
           <a href="../ProvideTrackingAndAnalysis/MyPurchase.php"> <img src="../../images/GUIImages/sales.png" style="width:20px;border:0;vertical-align: middle;"/> My Purchase </a> <br>
-          <a href="../ProvideTrackingAndAnalysis/TrackOrder.php"> <img src="../../images/GUIImages/road.png" style="width:20px;border:0;vertical-align: middle;"/> Track Order </a> <br>
+          <a href="../ProviManagePaymentdeTrackingAndAnalysis/TrackOrder.php"> <img src="../../images/GUIImages/road.png" style="width:20px;border:0;vertical-align: middle;"/> Track Order </a> <br>
           <a href="../ManageUser/Logout.php"> <img src="../../images/GUIImages/logout.png" style="width:20px;border:0;vertical-align: middle;"/> Logout </a> <br>
         </form>
       </div>
@@ -124,7 +137,7 @@ if(isset($_POST['addcart'])){
         $image_src = "../../images/PetImages/".$image;
       ?>
       
-    <tr style="height: 90%"><hr>
+    <tr style="height: 75%"><hr>
       <td><table style="height: 85%;" align="center">
         <tr>
           <td valign="top">
@@ -192,31 +205,34 @@ if(isset($_POST['addcart'])){
 
       ?>
         <tr><input type="hidden" name="id" size="30" value="<?php echo $row['pet_id']?>"><input type="hidden" name="sp_id" size="30" value="<?php echo $row['sp_id']?>"><input type="hidden" name="imgpath" size="30" value="<?php echo $row['pet_coverpath']?>"><input type="hidden" name="type" size="30" value="Pet">
-          <td width="20%">Product Name </td>
+          <td width="20%"><b>Product Name</b></td>
           <td>: <?=$row['pet_name']?> <input type="hidden" name="name" size="30" value="<?php echo $row['pet_name']?>"></td>
         </tr>
         <tr>
-          <td>Product Price</td>
+          <td><b>Product Price</b></td>
           <td>: RM <?=$row['pet_price']?> <input type="hidden" name="price" size="30" value="<?php echo $row['pet_price']?>"> </td>    
         </tr>
         <tr>
-          <td>Quantity</td>
+          <td><b>Quantity</b></td>
           <td>: <button name='decqty'>-</button>
-        <input type='text' size='1' name='quantity' value='<?= $value; ?>'/>
+        <input type='number' size='1' min= "1"  max="<?=$row["pet_quantity"]?>" name='quantity'  value='<?= $value; ?>'/> <! -- add -->
         <button name='incqty'>+</button>&nbsp; &nbsp; <?=$row["pet_quantity"]?> Available</td>
+                <input type='hidden' name='maxquantity'  value="<?php echo $row['pet_quantity']?>"/> <! -- add -->
         </tr>
         <tr>
-          <td>Variation</td>
+          <td><b>Variation</b></td>
           <td>: <?=$show_variation?></td>
         </tr>
         <tr>
-          <td>Product Details</td>
-          <td>: <?=$row['pet_detail']?></td>
+          <td colspan="2"><hr><em><b>Product Details</b></em> :<hr></td>
+        </tr>
+        <tr>
+          <td><?=$row['pet_detail']?></td>
         </tr>
       </table></td>
     </tr>
     <tr style="border-top: 1px solid black">
-      <td><button type="button" name="back" onclick="window.location.href='ViewProduct.php?pet_variation=<?php echo $row['pet_variation']?>'"> Back </button></td>
+      <td><input type='hidden' name='maxquantity'  value="<?php echo $row['pet_quantity']?>"/> <button type="button" name="back" onclick="window.location.href='ViewProduct.php?pet_variation=<?php echo $row['pet_variation']?>'"> Back </button></td>
         <?php }?>
       <td width="50%" align="right"><input type="submit" id="submit_btn" name="addcart" value="Add to cart"></td></form>
     </tr>
