@@ -22,31 +22,14 @@ if(!isset($_SESSION["loggedin"])){
 
 $value = isset($_POST['quantity']) ? $_POST['quantity'] : 1; 
 if(isset($_POST['incqty'])){
-   $max=$_POST['maxquantity']; 
-   if($_POST['quantity'] <= $max){
-    $value += 1;
-    if ($value > $max)
-    {
-      $value=$max;
-      echo '<script>alert("Sorry. You already reach the maximum quantity of this product.")</script>';
-    }
-   }
-                                          
+   $value += 1;
 }
-
 
 if(isset($_POST['decqty']) && $_POST['quantity'] > 0){
    $value -= 1;                                            
 }
 else if(isset($_POST['decqty']) && $_POST['quantity'] == 0){
    $value = 0;                                            
-}
-
-if(isset($_POST['decqty']) && $_POST['quantity'] > 0){
-   $value -= 1; 
-   if ($_POST['quantity'] == 1) 
-   $value=1;  
-   echo '<script>alert("Sorry. You already reach the minimum quantity of this product.")</script>';                                        
 }
 
 if(isset($_POST['addcart'])){
@@ -219,9 +202,8 @@ if(isset($_POST['addcart'])){
         <tr>
           <td>Quantity</td>
           <td>: <button name='decqty'>-</button>
-        <input type='number' size='1' min= "1"  max="<?=$row["pet_quantity"]?>" name='quantity'  value='<?= $value; ?>'/> 
+        <input type='text' size='1' name='quantity' value='<?= $value; ?>'/>
         <button name='incqty'>+</button>&nbsp; &nbsp; <?=$row["pet_quantity"]?> Available</td>
-          <input type='hidden' name='maxquantity'  value="<?php echo $row['pet_quantity']?>"/>
         </tr>
         <tr>
           <td>Variation</td>
