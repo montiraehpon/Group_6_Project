@@ -69,7 +69,7 @@ if(isset($_POST['getData'])){
     </tr>
   </table>
   <form action="" method="POST">
-  <table id="detail" width="100%" height="70%" align="center" border="1">
+  <table id="detail" width="100%" height="70%" align="center">
     <tr>
       <td colspan="4" align="center" style="height: 1%"><h3>Medicine Variation</h3></td>
     </tr>
