@@ -14,6 +14,12 @@ if(isset($_POST["variation"])){
   $med->med_getVariation();  
 }
 
+if(isset($_POST['getData'])){
+  $output = $med->med_viewAll();
+  echo $output;
+  exit;
+}
+
 ?>
 <html>
 <head>
@@ -63,18 +69,37 @@ if(isset($_POST["variation"])){
     </tr>
   </table>
   <form action="" method="POST">
-  <table id="detail" width="100%" height="70%" align="center">
+  <table id="detail" width="100%" height="70%" align="center" border="1">
     <tr>
-      <td colspan="4" align="center"><h3>Medicine Variation</h3></td>
+      <td colspan="4" align="center" style="height: 1%"><h3>Medicine Variation</h3></td>
     </tr>
-    <tr align="center" style="height: 90%"> <hr>
-      <td><button type="submit" name="variation" value="Vitamin" style="width: 120px;height: 120px"> Vitamin<br> <br> <img src="../../images/GUIImages/vitamin.png" style="width:50px;height:50px;border:0"/>  </button></td>
-      <td><button type="submit" name="variation" value="Personal" style="width: 120px;height: 120px"> Personal Care <br> <br> <img src="../../images/GUIImages/toiletries.png" style="width:50px;height:50px;border:0"/>  </button></td>
-      <td><button type="submit" name="variation" value="Food" style="width: 120px;height: 120px"> Health Food<br> <br> <img src="../../images/GUIImages/protein-shake.png" style="width:50px;height:50px;border:0"/>  </button></td>
-      <td><button type="submit" name="variation" value="Tool" style="width: 120px;height: 120px"> Health Tool<br> <br> <img src="../../images/GUIImages/aid.png" style="width:50px;height:50px;border:0"/>  </button></td>
+    <tr align="center" style="height: 20%"> <hr>
+      <td colspan="2">
+        <button type="submit" name="variation" value="Vitamin" style="width: 200px;height: 100px"> Vitamin<br> <br> <img src="../../images/GUIImages/vitamin.png" style="width:50px;height:50px;border:0"/>  </button>
+
+        <button type="submit" name="variation" value="Personal" style="width: 200px;height: 100px"> Personal Care <br> <br> <img src="../../images/GUIImages/toiletries.png" style="width:50px;height:50px;border:0"/>  </button>
+
+        <button type="submit" name="variation" value="Food" style="width: 200px;height: 100px"> Health Food<br> <br> <img src="../../images/GUIImages/protein-shake.png" style="width:50px;height:50px;border:0"/>  </button>
+
+        <button type="submit" name="variation" value="Tool" style="width: 200px;height: 100px"> Health Tool<br> <br> <img src="../../images/GUIImages/aid.png" style="width:50px;height:50px;border:0"/>  </button>
+      </td>
     </tr>
     <tr>
-      <td colspan="4"><button type="button" name="back" onclick="window.location.href='../ManageUser/CustomerHomepage.php'"> Back </button></td>
+      <td align="right" style="height: 1%" >Price: <select id="price">
+          <option value="none">None</option>
+          <option value="asc">Low to High</option>
+          <option value="desc">High to low</option>
+          </select>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          Search: <input type="text" size="20" id="search_box" placeholder="Search In Medicine">
+        </td>
+    </tr>
+    <tr>
+      <td colspan="3" style="height: auto">
+        <div id="med_Allproduct"></div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="4" style="height: 1%"><button type="button" name="back" onclick="window.location.href='../ManageUser/CustomerHomepage.php'"> Back </button></td>
     </tr>
   </table>
   </form>
@@ -116,4 +141,56 @@ if(isset($_POST["variation"])){
   </table>
 </body>
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
 
+    $("#cus_button").click(function() {
+    $(".cus_form").show();
+      });
+    });
+
+    $(document).mouseup(function (e) { 
+      if ($(e.target).closest(".cus_form").length 
+            === 0) { 
+        $(".cus_form").hide(); 
+      } 
+    }); 
+
+    $(document).ready(function(){
+    load_data(2, 1, "none");
+
+    function load_data(getData, page, sortPrice = '', search = ''){
+      $.ajax({
+        url:'MedVariation.php',
+        method:"POST",
+        data:{getData:getData, page:page, sortPrice:sortPrice, search:search},
+        success:function(data){
+        $('#med_Allproduct').html(data);
+
+        }
+      });
+    }
+
+    $(document).on('click', '.page-link', function(){
+      var page = $(this).data('page_number');
+      var search = $('#search_box').val();
+      var sortPrice = $('#price').val();
+      load_data(2, page, sortPrice, search);
+    });
+
+    $('#search_box').keyup(function(){
+      var search = $('#search_box').val();
+      var sortPrice = $('#price').val();
+      load_data(2, 1, sortPrice,search);
+    });
+
+    $(document).on('change', '#price', function(){
+      var search = $('#search_box').val();
+      var sortPrice = $('#price').val();
+      load_data(2, 1, sortPrice, search);  
+    });
+
+    });
+
+  </script>
