@@ -68,19 +68,38 @@ else if($med_variationn == "Tool"){
   </table>
   <table width="100%" height="80%" align="center">
     <tr> <hr>
-      <th align="center" colspan="3"><h2><?=$name?></h2> <input type="hidden" id="variation" value="<?=$med_variationn?>"></th>
+      <th align="center" colspan="3" height="1%"><h2><?=$name?></h2> <input type="hidden" id="variation" value="<?=$med_variationn?>"></th>
     </tr>
-    <tr>
+    <tr height="5%">
       <td><img src="../../images/GUIImages/arrows.png" onclick="window.location.href='MedVariation.php'" style="width: 25px;height: 25px"></td>
-      <td align="right">Price: <select id="price">
+      <td align="right">
+          Price: <select id="price">
           <option value="none">None</option>
           <option value="asc">Low to High</option>
           <option value="desc">High to low</option>
-          </select></td>
-      <td align="center">Search: <input type="text" size="20" id="search_box" placeholder="Search name here"></td>
+          </select>
+          &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+          Search: <input type="text" size="20" id="search_box" placeholder="Search in Vitamin">
+      </td>
     </tr>
     <tr>
-      <td colspan="3" style="height: auto">
+      <td width="10%" height="10%" action="ViewProduct.php" method="POST" id="med_category" bgcolor="white">
+        <p style="font-size: 20px;  font-weight: bold; vertical-align: top">Category</p>
+        <button type="submit" name="variation" value="Vitamin" style="width: 200px;height: 50px; background: orange"> Vitamin</button>
+        <br>
+        <button type="submit" name="variation" value="Personal" style="width: 200px;height: 50px; background: orange"> Personal Care</button>
+
+        <button type="submit" name="variation" value="Food" style="width: 200px;height: 50px; background: orange"> Health Food</button>
+
+        <button type="submit" name="variation" value="Tool" style="width: 200px;height: 50px; background: orange"> Health Tool</button>
+
+        <?php
+        if(isset($_POST['variation'])){
+          $med->med_getVariation();
+        }
+        ?>
+      </td>
+      <td  style="height: auto" rowspan="2">
         <div id="med_product"></div>
       </td>
     </tr>
