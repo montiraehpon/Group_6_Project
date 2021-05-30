@@ -10,6 +10,7 @@ class goodsController{
     	$goods->name = $_POST['name'];
         $goods->color = trim($_POST['color']);
         $goods->size = trim($_POST['size']);
+        $goods->detail = trim($_POST['detail']);
         $goods->price = $_POST['price'];
         $goods->quantity = $_POST['quantity'];
         $goods->variation = $_POST['goods_variation'];
@@ -113,6 +114,7 @@ class goodsController{
         $goods->name = $_POST['name'];
         $goods->color = trim($_POST['color']);
         $goods->size = trim($_POST['size']);
+        $goods->detail = trim($_POST['detail']);
         $goods->price = $_POST['price'];
         $goods->quantity = $_POST['quantity'];
         $goods->variation = $_POST['goods_variation'];
