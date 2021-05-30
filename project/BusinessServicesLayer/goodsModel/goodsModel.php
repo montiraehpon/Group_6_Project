@@ -1,7 +1,7 @@
 <?php
 
 class goodsModel{
-    public $sp_id,$name,$imgpath,$imgid,$coverpath,$detail,$price,$quantity,$type,$variation,$searchname,$id,$gd_variation;
+    public $sp_id,$name,$imgpath,$imgid,$coverpath,$color,$size,$price,$quantity,$type,$variation,$searchname,$id,$gd_variation;
     
     // create a new PDO connection
     public function connect(){
@@ -36,8 +36,8 @@ class goodsModel{
 
     //insert product//
     function goods_addProduct(){
-    	$sql = "insert into goods(gd_name,gd_detail,gd_price,gd_imgid,gd_coverpath,gd_quantity,gd_variation,sp_id) values(:gd_name,:gd_detail,:gd_price,:gd_imgid,:gd_coverpath,:gd_quantity,:gd_variation,:sp_id)";
-        $args = [':gd_name'=>$this->name, ':gd_detail'=>$this->detail, ':gd_price'=>$this->price, ':gd_imgid'=>$this->imgid, ':gd_coverpath'=>$this->coverpath,':gd_quantity'=>$this->quantity,':gd_variation'=>$this->variation,':sp_id'=>$this->sp_id];
+    	$sql = "insert into goods(gd_name,gd_color,gd_size,gd_price,gd_imgid,gd_coverpath,gd_quantity,gd_variation,sp_id) values(:gd_name,:gd_color, :gd_size,:gd_price,:gd_imgid,:gd_coverpath,:gd_quantity,:gd_variation,:sp_id)";
+        $args = [':gd_name'=>$this->name, ':gd_color'=>$this->color, ':gd_size'=>$this->size, ':gd_price'=>$this->price, ':gd_imgid'=>$this->imgid, ':gd_coverpath'=>$this->coverpath,':gd_quantity'=>$this->quantity,':gd_variation'=>$this->variation,':sp_id'=>$this->sp_id];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
         return $count;
@@ -92,15 +92,15 @@ class goodsModel{
     //edit product//
     function goods_editProduct(){
         if($this->coverpath != ""){
-            $sql = "update goods set gd_name=:gd_name,gd_detail=:gd_detail,gd_variation=:gd_variation,gd_coverpath=:gd_coverpath,gd_price=:gd_price,gd_quantity=:gd_quantity where gd_id=:gd_id and sp_id=:sp_id";
-            $args = [':gd_name'=>$this->name, ':gd_detail'=>$this->detail, ':gd_variation'=>$this->variation, ':gd_coverpath'=>$this->coverpath,':gd_price'=>$this->price,':gd_quantity'=>$this->quantity,':gd_id'=>$this->id, ':sp_id'=>$this->sp_id];
+            $sql = "update goods set gd_name=:gd_name,gd_color=:gd_color,gd_size=:gd_size,gd_variation=:gd_variation,gd_coverpath=:gd_coverpath,gd_price=:gd_price,gd_quantity=:gd_quantity where gd_id=:gd_id and sp_id=:sp_id";
+            $args = [':gd_name'=>$this->name, ':gd_color'=>$this->color, ':gd_size'=>$this->size, ':gd_variation'=>$this->variation, ':gd_coverpath'=>$this->coverpath,':gd_price'=>$this->price,':gd_quantity'=>$this->quantity,':gd_id'=>$this->id, ':sp_id'=>$this->sp_id];
             $stmt = $this->run($sql, $args);
             $count = $stmt->rowCount();
             return $count;
         }
         else{
-            $sql = "update goods set gd_name=:gd_name,gd_detail=:gd_detail,gd_variation=:gd_variation,gd_price=:gd_price,gd_quantity=:gd_quantity where gd_id=:gd_id and sp_id=:sp_id";
-            $args = [':gd_name'=>$this->name, ':gd_detail'=>$this->detail, ':gd_variation'=>$this->variation, ':gd_price'=>$this->price,':gd_quantity'=>$this->quantity,':gd_id'=>$this->id, ':sp_id'=>$this->sp_id];
+            $sql = "update goods set gd_name=:gd_name,gd_color=:gd_color,,gd_size=:gd_size,gd_variation=:gd_variation,gd_price=:gd_price,gd_quantity=:gd_quantity where gd_id=:gd_id and sp_id=:sp_id";
+            $args = [':gd_name'=>$this->name, ':gd_color'=>$this->color, ':gd_size'=>$this->size, ':gd_variation'=>$this->variation, ':gd_price'=>$this->price,':gd_quantity'=>$this->quantity,':gd_id'=>$this->id, ':sp_id'=>$this->sp_id];
             $stmt = $this->run($sql, $args);
             $count = $stmt->rowCount();
             return $count; 

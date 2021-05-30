@@ -101,7 +101,7 @@ if(isset($_POST['add'])){
       <tr>
       	<td>
       		<a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add Color Column"><i class="fas fa-plus-square"></i></a>
-      		<a href='javascript:void(0);'  class='remove'><i class="fas fa-minus-square" title="Remove Color Column"></i></a>
+      		<a href='javascript:void(0);' class='remove'><i class="fas fa-minus-square" title="Remove Color Column"></i></a>
       	</td>
      	<tr>
         <td>Size: <input type="text" name="size[]" placeholder="Good Color" required></td>
