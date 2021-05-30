@@ -8,7 +8,8 @@ class goodsController{
     	$goods = new goodsModel();
     	$goods->sp_id = $sp_id;
     	$goods->name = $_POST['name'];
-        $goods->detail = trim($_POST['detail']);
+        $goods->color = trim($_POST['color']);
+        $goods->size = trim($_POST['size']);
         $goods->price = $_POST['price'];
         $goods->quantity = $_POST['quantity'];
         $goods->variation = $_POST['goods_variation'];
@@ -110,7 +111,8 @@ class goodsController{
         $goods->sp_id = $sp_id;
         $goods->id = $_POST['cur_gd_id'];
         $goods->name = $_POST['name'];
-        $goods->detail = trim($_POST['detail']);
+        $goods->color = trim($_POST['color']);
+        $goods->size = trim($_POST['size']);
         $goods->price = $_POST['price'];
         $goods->quantity = $_POST['quantity'];
         $goods->variation = $_POST['goods_variation'];
