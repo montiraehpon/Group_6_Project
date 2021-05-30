@@ -137,9 +137,17 @@ if(!isset($_SESSION["loggedin"])){
           <td>: <?=$show_variation?></td>
         </tr>
         <tr>
+          <td>Product Characteristics</td>
+          <td>: <?=$row['gd_color']?></td>
+          <td>: <?=$row['gd_size']?></td>
+        </tr>
+        <tr>
           <td>Product Details</td>
           <td>: <?=$row['gd_detail']?></td>
         </tr>
+
+
+
       </table></td>
       <td><table style="height: auto">
         <tr>
