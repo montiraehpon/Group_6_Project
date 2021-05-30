@@ -20,6 +20,7 @@ if(isset($_POST['add'])){
 <head>
   <title>Add Goods Product</title>
   <link href="../../css/design.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -95,7 +96,25 @@ if(isset($_POST['add'])){
       </select> </td> 
     </tr>
     <tr>
-      <td>Product Details: </td>
+      <td rowspan="4">Product Characteristics:</td>
+      <td id="Color_Data">Color: <input type="text" name="color[]" placeholder="Good Color" required></td>
+      <tr>
+      	<td>
+      		<a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add Color Column"><i class="fas fa-plus-square"></i></a>
+      		<a href='javascript:void(0);'  class='remove'><i class="fas fa-minus-square" title="Remove Color Column"></i></a>
+      	</td>
+     	<tr>
+        <td>Size: <input type="text" name="size[]" placeholder="Good Color" required></td>
+      </tr>
+      <tr>
+      	<td>
+      		<a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add Size Column"><i class="fas fa-plus-square"></i></a>
+      		<a href='javascript:void(0);'  class='remove' title="Remove Size Column"><i class="fas fa-minus-square"></i></a>
+      	</td>
+     	<tr>
+    </tr>
+    <tr>
+      <td>Product Details:</td>
       <td ><textarea rows="5" cols="40" name="detail" placeholder="Maximum 100 words" required></textarea></td>
       <td align="center">Product Images *:</td>
       <td align="center"><input type="file" name="imgpath[]" multiple></td>
@@ -146,6 +165,25 @@ if(isset($_POST['add'])){
     </tr>
   </table>
   </form>
+<!-- Script to Add or Remove Column for Product Characteristics -->
+<script>
+  $(function(){
+    $('#addMore').on('click', function() {
+      var data = $("#Color_Data tr:eq(1)").clone(true).appendTo("#Color_Data");
+        data.find("input").val('');
+      });
+      $(document).on('click', '.remove', function() {
+        var trIndex = $(this).closest("tr").index();
+          if(trIndex>0) {
+            $(this).closest("tr").remove();
+          } 
+          else {
+            alert("Sorry!!! Cannot remove first row!");
+          }
+      });
+    });      
+</script>
+<!-- /Script to Add or Remove Column for Product Characteristics -->
 </body>
 </html>
 
