@@ -112,8 +112,8 @@ class goodsController{
         $goods->sp_id = $sp_id;
         $goods->id = $_POST['cur_gd_id'];
         $goods->name = $_POST['name'];
-        $goods->color = trim($_POST['color']);
-        $goods->size = trim($_POST['size']);
+        $goods->color = serialize($_POST['color']);
+        $goods->size = serialize($_POST['size']);
         $goods->detail = trim($_POST['detail']);
         $goods->price = $_POST['price'];
         $goods->quantity = $_POST['quantity'];

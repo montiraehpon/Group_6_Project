@@ -173,9 +173,6 @@ if(!isset($_SESSION["loggedin"])){
           <td>Product Details</td>
           <td>: <?=$row['gd_detail']?></td>
         </tr>
-
-
-
       </table></td>
       <td><table style="height: auto">
         <tr>
