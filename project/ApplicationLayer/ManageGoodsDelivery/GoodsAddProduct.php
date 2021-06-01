@@ -103,39 +103,41 @@ if(isset($_POST['add'])){
       				</select> 
 				</td> 
     		</tr>
-    		<tr>
-      			<td rowspan="4">Product Characteristics:</td>
-				<div class="Color_Item">
-					<td id="Color_Data">
-						Color:
-						<input type="text" name="color[]" placeholder="Good Color" required><br>
+				<!-- Product Characteristics -->
+				<tr>
+					<td rowspan="4">
+						Product Characteristics:
 					</td>
-				</div>
-      		<tr>
-      		<td>
-      			<a href="javascript:void(0);" style="font-size:18px;" id="addMore" title="Add Color Column">
-					<i class="fas fa-plus-square"></i>
-				</a>
-      			<a href='javascript:void(0);'  class='remove'>
-					<i class="fas fa-minus-square" title="Remove Color Column"></i>
-				</a>
-      		</td>
-     		<tr>
-        		<td>
-					Size: 
-					<input type="text" name="size[]" placeholder="Good Color" required>
-				</td>
-      		</tr>
-      		<tr>
-      			<td>
-      				<a href="javascript:void(0);" style="font-size:18px;" id="addMore1" title="Add Size Column">
-						<i class="fas fa-plus-square"></i>
-					</a>
-      				<a href='javascript:void(0);'  class='remove' title="Remove Size Column">
-						<i class="fas fa-minus-square"></i>
-					</a>
-      			</td>
-     		<tr></tr>
+					<!-- Color -->
+					<td id="colorInput">
+						Color:
+						<input type="text" name="color[]" placeholder="Good Color">
+						<br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button onclick="addColor()"><i class="fas fa-plus-circle"></i></button>
+						<button onclick="removeColor(this)"><i class="fas fa-minus-circle"></i></button>
+					</td>
+				</tr>
+				<!-- /Color -->
+				<!-- Size -->
+				<tr>
+					<td id="sizeInput">
+						Size:
+						<input type="text" name="size[]" placeholder="Good Size">
+						<br>
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<button onclick="addSize()"><i class="fas fa-plus-circle"></i></button>
+						<button onclick="removeSize()"><i class="fas fa-minus-circle"></i></button>
+					</td>
+				</tr>
+				<!-- /Size -->
+				<!-- /Product Characteristics -->
     		<tr>
       			<td>Product Details:</td>
 				<td >
@@ -208,25 +210,46 @@ if(isset($_POST['add'])){
   		</table>
 	</form>
 	<!-- Script to Add or Remove Column for Product Characteristics -->
-	<script>
-  		$(function(){
-    		$('#addMore').on('click', function() {
-      			var data = $("#Color_Data tr:eq(1)").clone(true).appendTo("#Color_Item");
-        		data.find("input").val('');
-      		});
-      	$(document).on('click', '.remove', function() {   
-			var trIndex = $(this).closest("tr").index();
-				if(trIndex>0) {
-					$(this).closest("tr").remove();
-				} 
-				else {
-					alert("Sorry!!! Cannot remove first row!");
-				}
-			});
-    	});
-		function name(params) {
-			
-		}   
+<script>
+	function addColor() {
+		var x = document.createElement("INPUT");
+		x.setAttribute("type", "text");
+		x.setAttribute("name", "color[]");
+		x.setAttribute("placeholder", "Good Color");
+		var y = document.getElementById("colorInput");
+		var z = document.createElement("BR");
+		z.setAttribute("id", "below")
+		y.appendChild(z);
+		y.appendChild(x);
+	}
+
+	function removeColor(){
+		q = document.getElementById("colorInput");
+		w = document.getElementById("below");
+		w.remove();
+		q.remove();
+	}
+
+	function addSize(){
+		var x = document.createElement("INPUT");
+		x.setAttribute("type", "text");
+		x.setAttribute("name", "size[]");
+		x.setAttribute("placeholder", "Good Size");
+		var y = document.getElementById("sizeInput");
+		var z = document.createElement("BR");
+		z.setAttribute("id", "below")
+		y.appendChild(z);
+		y.appendChild(x);
+		y.appendChild(z);
+		y.appendChild(x);
+	}
+
+	function removSize(){
+		q = document.getElementById("sizeInput");
+		w = document.getElementById("below");
+		w.remove();
+		q.remove();
+	}
 	</script>
 	<!-- /Script to Add or Remove Column for Product Characteristics -->
 </body>
