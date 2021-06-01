@@ -227,7 +227,7 @@ if(isset($_POST['addcart'])){
           <td colspan="2"><hr><em><b>Product Details</b></em> :<hr></td>
         </tr>
         <tr>
-          <td><?=$row['pet_detail']?></td>
+          <td colspan="2"><?=$row['pet_detail']?></td>
         </tr>
       </table></td>
     </tr>
