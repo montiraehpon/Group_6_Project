@@ -1,18 +1,18 @@
 <?php
 
 class goodsModel{
-    public $sp_id,$name,$imgpath,$imgid,$coverpath,$detail,$color,$size,$price,$quantity,$type,$variation,$searchname,$id,$gd_variation;
+    public $sp_id,$name,$imgpath,$imgid,$coverpath,$color,$size,$detail,$price,$quantity,$type,$variation,$searchname,$id,$gd_variation;
     
     // create a new PDO connection
     public function connect(){
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
+        $servername = "localhost";
+        $username = "root";
+        $password = "";
 
-    $pdo = new PDO("mysql:host=$servername;dbname=project", $username, $password);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        $pdo = new PDO("mysql:host=$servername;dbname=project", $username, $password);
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    return $pdo;
+        return $pdo;
     }
 
     public function run($sql, $args = NULL){
@@ -36,8 +36,8 @@ class goodsModel{
 
     //insert product//
     function goods_addProduct(){
-    	$sql = "insert into goods(gd_name,gd_detail,gd_color,gd_size,gd_price,gd_imgid,gd_coverpath,gd_quantity,gd_variation,sp_id) values(:gd_name,:gd_detail,:gd_color,gd_size,:gd_price,:gd_imgid,:gd_coverpath,:gd_quantity,:gd_variation,:sp_id)";
-        $args = [':gd_name'=>$this->name, ':gd_detail'=>$this->detail, ':gd_color'=>$this->color,':gd_size'=>$this->size,':gd_price'=>$this->price, ':gd_imgid'=>$this->imgid, ':gd_coverpath'=>$this->coverpath,':gd_quantity'=>$this->quantity,':gd_variation'=>$this->variation,':sp_id'=>$this->sp_id];
+    	$sql = "insert into goods(gd_name,gd_color,gd_size,gd_detail,gd_price,gd_imgid,gd_coverpath,gd_quantity,gd_variation,sp_id) values(:gd_name,:gd_color,:gd_size,:gd_detail,:gd_price,:gd_imgid,:gd_coverpath,:gd_quantity,:gd_variation,:sp_id)";
+        $args = [':gd_name'=>$this->name, ':gd_color'=>$this->color,':gd_size'=>$this->size, ':gd_detail'=>$this->detail, ':gd_price'=>$this->price, ':gd_imgid'=>$this->imgid, ':gd_coverpath'=>$this->coverpath,':gd_quantity'=>$this->quantity,':gd_variation'=>$this->variation,':sp_id'=>$this->sp_id];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
         return $count;

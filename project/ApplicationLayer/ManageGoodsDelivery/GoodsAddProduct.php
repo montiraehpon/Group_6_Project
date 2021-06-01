@@ -222,14 +222,18 @@ if(isset($_POST['add'])){
 		y.appendChild(z);
 		y.appendChild(x);
 	}
+</script>
 
+<script>
 	function removeColor(){
 		q = document.getElementById("colorInput");
 		w = document.getElementById("below");
 		w.remove();
 		q.remove();
 	}
+</script>
 
+<script>
 	function addSize(){
 		var x = document.createElement("INPUT");
 		x.setAttribute("type", "text");
@@ -237,20 +241,20 @@ if(isset($_POST['add'])){
 		x.setAttribute("placeholder", "Good Size");
 		var y = document.getElementById("sizeInput");
 		var z = document.createElement("BR");
-		z.setAttribute("id", "below")
-		y.appendChild(z);
-		y.appendChild(x);
+		z.setAttribute("id", "belows")
 		y.appendChild(z);
 		y.appendChild(x);
 	}
+</script>
 
+<script>
 	function removSize(){
 		q = document.getElementById("sizeInput");
-		w = document.getElementById("below");
+		w = document.getElementById("belows");
 		w.remove();
 		q.remove();
 	}
-	</script>
+</script>
 	<!-- /Script to Add or Remove Column for Product Characteristics -->
 </body>
 </html>
