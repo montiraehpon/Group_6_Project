@@ -211,6 +211,43 @@ if(isset($_POST['addcart'])){
           <td>Variation</td>
           <td>: <?=$show_variation?></td>
         </tr>
+        				<!-- Product Characteristics -->
+				<tr>
+					<td rowspan="8">
+						Product Characteristics:
+					</td>
+					<!-- Color -->
+					<td id="colorInput">
+						Color:
+						<br>
+					</td>
+          <td>
+          <?php
+                $color = unserialize($row['gd_color']);
+                  foreach($color as $m){
+                  echo $m . ",";
+                }
+              ?>
+          </td>
+				</tr>
+				<!-- /Color -->
+				<!-- Size -->
+				<tr>
+					<td id="sizeInput">
+						Size:
+						<br>
+					</td>
+          <td>
+          <?php
+            $size = unserialize($row['gd_size']);
+            foreach($size as $n){
+              echo $n . ",";
+            }
+          ?>
+          </td>
+				</tr>
+				<!-- /Size -->
+				<!-- /Product Characteristics -->
         <tr>
           <td>Product Details</td>
           <td>: <?=$row['gd_detail']?></td>

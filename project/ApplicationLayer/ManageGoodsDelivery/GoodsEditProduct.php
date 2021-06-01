@@ -134,7 +134,7 @@ if(isset($_POST['update'])){
 				<?php
           $size = unserialize($row['gd_size']);
           foreach($size as $n){ 
-            echo "<input type='text' name='size[]' value=".$m."><br>"; } 
+            echo "<input type='text' name='size[]' value=".$n."><br>"; } 
         ?>
 				<br>
 			</td>

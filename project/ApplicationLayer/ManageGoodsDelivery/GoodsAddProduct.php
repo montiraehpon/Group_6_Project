@@ -210,51 +210,51 @@ if(isset($_POST['add'])){
   		</table>
 	</form>
 	<!-- Script to Add or Remove Column for Product Characteristics -->
-<script>
-	function addColor() {
-		var x = document.createElement("INPUT");
-		x.setAttribute("type", "text");
-		x.setAttribute("name", "color[]");
-		x.setAttribute("placeholder", "Good Color");
-		var y = document.getElementById("colorInput");
-		var z = document.createElement("BR");
-		z.setAttribute("id", "below")
-		y.appendChild(z);
-		y.appendChild(x);
-	}
-</script>
+	<script>
+		function addColor() {
+			var x = document.createElement("INPUT");
+			x.setAttribute("type", "text");
+			x.setAttribute("name", "color[]");
+			x.setAttribute("placeholder", "Good Color");
+			var y = document.getElementById("colorInput");
+			var z = document.createElement("BR");
+			z.setAttribute("id", "below")
+			y.appendChild(z);
+			y.appendChild(x);
+		}
+	</script>
 
-<script>
-	function removeColor(){
-		q = document.getElementById("colorInput");
-		w = document.getElementById("below");
-		w.remove();
-		q.remove();
-	}
-</script>
+	<script>
+		function removeColor(){
+			q = document.getElementById("colorInput");
+			w = document.getElementById("below");
+			w.remove();
+			q.remove();
+		}
+	</script>
 
-<script>
-	function addSize(){
-		var x = document.createElement("INPUT");
-		x.setAttribute("type", "text");
-		x.setAttribute("name", "size[]");
-		x.setAttribute("placeholder", "Good Size");
-		var y = document.getElementById("sizeInput");
-		var z = document.createElement("BR");
-		z.setAttribute("id", "belows")
-		y.appendChild(z);
-		y.appendChild(x);
-	}
-</script>
+	<script>
+		function addSize(){
+			var x = document.createElement("INPUT");
+			x.setAttribute("type", "text");
+			x.setAttribute("name", "size[]");
+			x.setAttribute("placeholder", "Good Size");
+			var y = document.getElementById("sizeInput");
+			var z = document.createElement("BR");
+			z.setAttribute("id", "belows")
+			y.appendChild(z);
+			y.appendChild(x);
+		}
+	</script>
 
-<script>
-	function removSize(){
-		q = document.getElementById("sizeInput");
-		w = document.getElementById("belows");
-		w.remove();
-		q.remove();
-	}
-</script>
+	<script>
+		function removSize(){
+			q = document.getElementById("sizeInput");
+			w = document.getElementById("belows");
+			w.remove();
+			q.remove();
+		}
+	</script>
 	<!-- /Script to Add or Remove Column for Product Characteristics -->
 </body>
 </html>
