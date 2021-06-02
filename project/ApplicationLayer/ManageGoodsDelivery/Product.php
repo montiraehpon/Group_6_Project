@@ -222,12 +222,15 @@ if(isset($_POST['addcart'])){
 						<br>
 					</td>
           <td>
-          <?php
-                $color = unserialize($row['gd_color']);
-                  foreach($color as $m){
-                  echo $m . ",";
-                }
-              ?>
+            <?php
+              echo "<select>";
+              $color = unserialize($row['gd_color']);
+              foreach($color as $m) 
+              {
+                echo "<option>" . $m . "</option>";
+              }
+              echo "</select>";
+            ?>
           </td>
 				</tr>
 				<!-- /Color -->
@@ -239,11 +242,14 @@ if(isset($_POST['addcart'])){
 					</td>
           <td>
           <?php
-            $size = unserialize($row['gd_size']);
-            foreach($size as $n){
-              echo $n . ",";
-            }
-          ?>
+              echo "<select>";
+              $size = unserialize($row['gd_size']);
+              foreach($size as $n) 
+              {
+                echo "<option>" . $n . "</option>";
+              }
+              echo "</select>";
+            ?>
           </td>
 				</tr>
 				<!-- /Size -->

@@ -248,7 +248,7 @@ if(isset($_POST['add'])){
 	</script>
 
 	<script>
-		function removSize(){
+		function removeSize(){
 			q = document.getElementById("sizeInput");
 			w = document.getElementById("belows");
 			w.remove();
