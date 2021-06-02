@@ -75,6 +75,7 @@ if(isset($_POST['getData'])){
     </tr>
     <tr align="center" style="height: 20%"> <hr>
       <td colspan="2">
+        /Perfective maintenance - Add new function
         <button type="submit" name="variation" value="Vitamin" style="width: 200px;height: 100px"> Vitamin<br> <br> <img src="../../images/GUIImages/vitamin.png" style="width:50px;height:50px;border:0"/>  </button>
 
         <button type="submit" name="variation" value="Personal" style="width: 200px;height: 100px"> Personal Care <br> <br> <img src="../../images/GUIImages/toiletries.png" style="width:50px;height:50px;border:0"/>  </button>
@@ -85,6 +86,7 @@ if(isset($_POST['getData'])){
       </td>
     </tr>
     <tr>
+      /Perfective Maintenance - Add new function
       <td align="right" style="height: 1%" >Price: <select id="price">
           <option value="none">None</option>
           <option value="asc">Low to High</option>
