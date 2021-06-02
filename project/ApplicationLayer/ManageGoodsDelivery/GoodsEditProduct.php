@@ -23,6 +23,7 @@ if(isset($_POST['update'])){
 <head>
   <title>Edit Goods Product</title>
   <link href="../../css/design.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script>
     $(document).ready(function() {
@@ -103,6 +104,49 @@ if(isset($_POST['update'])){
           <option value="Lifestyle" <?php if ($row['gd_variation'] == "Lifestyle" ) echo 'selected' ; ?> >Life Style</option>
       </select> </td>
     </tr>
+		<!-- Product Characteristics -->
+		<tr>
+			<td rowspan="4">
+				Product Characteristics:
+			</td>
+			<!-- Color -->
+			<td id="colorInput">
+				Color:
+				<?php
+          $color = unserialize($row['gd_color']);
+          foreach($color as $m){ 
+            echo "<input type='text' name='color[]' value=".$m."><br>"; } 
+        ?>
+				<br>
+			</td>
+			</tr>
+			<tr>
+			<td>
+				<button onclick="addColor()"><i class="fas fa-plus-circle"></i></button>
+				<button onclick="removeColor(this)"><i class="fas fa-minus-circle"></i></button>
+			</td>
+		</tr>
+		<!-- /Color -->
+		<!-- Size -->
+		<tr>
+			<td id="sizeInput">
+				Size:
+				<?php
+          $size = unserialize($row['gd_size']);
+          foreach($size as $n){ 
+            echo "<input type='text' name='size[]' value=".$n."><br>"; } 
+        ?>
+				<br>
+			</td>
+		</tr>
+		<tr>
+			<td>
+				<button onclick="addSize()"><i class="fas fa-plus-circle"></i></button>
+				<button onclick="removeSize()"><i class="fas fa-minus-circle"></i></button>
+			</td>
+		</tr>
+		<!-- /Size -->
+		<!-- /Product Characteristics -->
     <tr>
       <td>Product Details: </td>
       <td><textarea rows="5" cols="40" name="detail" required><?php echo $row['gd_detail']?></textarea></td>
@@ -156,6 +200,53 @@ if(isset($_POST['update'])){
     </tr>
   </table>
   </form>
+  <!-- Script to Add or Remove Column for Product Characteristics -->
+  <script>
+    function addColor() {
+      var x = document.createElement("INPUT");
+      x.setAttribute("type", "text");
+      x.setAttribute("name", "color[]");
+      x.setAttribute("placeholder", "Good Color");
+      var y = document.getElementById("colorInput");
+      var z = document.createElement("BR");
+      z.setAttribute("id", "below")
+      y.appendChild(z);
+      y.appendChild(x);
+    }
+  </script>
+
+  <script>
+    function removeColor(){
+      q = document.getElementById("colorInput");
+      w = document.getElementById("below");
+      w.remove();
+      q.remove();
+    }
+  </script>
+
+  <script>
+    function addSize(){
+      var x = document.createElement("INPUT");
+      x.setAttribute("type", "text");
+      x.setAttribute("name", "size[]");
+      x.setAttribute("placeholder", "Good Size");
+      var y = document.getElementById("sizeInput");
+      var z = document.createElement("BR");
+      z.setAttribute("id", "belows")
+      y.appendChild(z);
+      y.appendChild(x);
+    }
+  </script>
+
+  <script>
+    function removSize(){
+      q = document.getElementById("sizeInput");
+      w = document.getElementById("belows");
+      w.remove();
+      q.remove();
+    }
+  </script>
+	<!-- /Script to Add or Remove Column for Product Characteristics -->
 </body>
 </html>
 

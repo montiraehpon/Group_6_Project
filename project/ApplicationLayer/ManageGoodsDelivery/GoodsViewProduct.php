@@ -137,6 +137,39 @@ if(!isset($_SESSION["loggedin"])){
           <td>: <?=$show_variation?></td>
         </tr>
         <tr>
+          <!-- Product Characteristics -->
+          <tr>
+            <td rowspan="2">
+              Product Characteristics:
+            </td>
+            <!-- Color -->
+            <td id="colorInput">
+              Color:
+              <?php
+                $color = unserialize($row['gd_color']);
+                  foreach($color as $m){
+                  echo $m . ",";
+                }
+              ?>
+            </td>
+          </tr>
+          <!-- /Color -->
+          <!-- Size -->
+          <tr>
+            <td id="sizeInput">
+              Size:
+              <?php
+                $size = unserialize($row['gd_size']);
+                  foreach($size as $n){
+                  echo $n . ",";
+                }
+              ?>
+            </td>
+          </tr>
+          <!-- /Size -->
+          <!-- /Product Characteristics -->
+        </tr>
+        <tr>
           <td>Product Details</td>
           <td>: <?=$row['gd_detail']?></td>
         </tr>
