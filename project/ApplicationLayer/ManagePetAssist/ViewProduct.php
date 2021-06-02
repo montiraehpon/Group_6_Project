@@ -65,7 +65,6 @@ else if($pet_variationn == "Toy"){
       <th align="center" colspan="3"><h2><?=$name?></h2> <input type="hidden" id="variation" value="<?=$pet_variationn?>"></th>
     </tr>
     <tr>
-      <td><img src="../../images/GUIImages/arrows.png" onclick="window.location.href='PetVariation.php'" style="width: 25px;height: 25px"></td>
       <td align="right">Price: <select id="price">
           <option value="none">None</option>
           <option value="asc">Low to High</option>
@@ -76,6 +75,11 @@ else if($pet_variationn == "Toy"){
     <tr>
       <td colspan="3" style="height: auto">
         <div id="pet_product"></div>
+      </td>
+    </tr>
+    <tr>
+      <td >
+        <button type="button" onclick="window.location.href='PetVariation.php'">Back</button>
       </td>
     </tr>
   </table>
