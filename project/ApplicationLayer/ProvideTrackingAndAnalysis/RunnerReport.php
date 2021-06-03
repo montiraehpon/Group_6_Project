@@ -64,9 +64,13 @@ $datacheck = $track->rn_rpt_check($rn_id);
   </table>
   <table id="scd_detail" width="70%" height="70%" align="center" rules="all">
     <tr style="border-bottom: 1px solid black;height: 8%"> <hr>
-        <td align="center" width="20%%">Order ID</td>
-        <td align="center" width="30%">Drop Date and Time</td>
-        <td align="center" width="20%">Commission(RM)</td>
+        <td align="center" width="10%%">Order ID</td>
+        <td align="center" width="20%%">Customer Name</td>
+        <td align="center" width="10%%">Customer Phone</td>
+        <td align="center" width="20%%">Service Provider Name</td>
+        <td align="center" width="10%%">Service Provider Phone</td>
+        <td align="center" width="20%">Drop Date and Time</td>
+        <td align="center" width="10%">Commission(RM)</td>
     </tr>
     <?php
     $subtotal=0;
@@ -84,13 +88,21 @@ $datacheck = $track->rn_rpt_check($rn_id);
 
     ?>
       <tr>
-        <td align="center">ODR<?=$row["order_id"]?></td>
+        <td align="center">Order<?=$row["order_id"]?></td>
+        <td align="center"><?=$row["cus_name"]?></td>
+        <td align="center"><?=$row["cus_phone_num"]?></td>
+        <td align="center"><?=$row["sp_name"]?></td>
+        <td align="center"><?=$row["sp_phone_num"]?></td>
         <td align="center"><?=$row["order_droptime"]?></td>
         <td align="center">RM <?=$rn_commission?></td>
       </tr>
     <?php }} ?>
     <tr style="height: 5%">
-        <td colspan="2" align="right" style="font-size: 25px">Total Commissions</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td colspan="2" align="center" style="font-size: 20px">Total Commission:</td>
         <td align="center">RM <?=$subtotal?></td>
       </tr>
     
