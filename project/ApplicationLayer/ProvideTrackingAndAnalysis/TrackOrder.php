@@ -64,8 +64,12 @@ $datacheck = $track->checkOrder($cus_id);
   <table id="scd_detail" width="70%" height="70%" align="center" rules="all">
     <tr style="border-bottom: 1px solid black;height: 8%"> <hr>
         <td align="center">Purchased Date</td>
+        <td align="center">Service Provider Name</td>
+        <td align="center">Service Provider Phone</td>
         <td align="center">Product Name</td>
         <td align="center">Quantity</td>
+        <td align="center">Runner Name</td>
+        <td align="center">Runner Phone</td>
         <td align="center">Status</td>
         <td align="center">Time</td>
     </tr>
@@ -87,9 +91,13 @@ $datacheck = $track->checkOrder($cus_id);
     ?>
       <tr>
         <td align="center"><?=$row["order_time"]?></td>
+        <td align="center"><?=$row["sp_name"]?></td>
+        <td align="center"><?=$row["sp_phone_num"]?></td>
         <td align="center"><?=$row["product_name"]?></td>
         <td align="center"><?=$row["product_quantity"]?></td>
-        <td align="center"><?=$row["status"]?></td>
+        <td align="center"><?=$row["rn_name"]?></td>
+        <td align="center"><?=$row["rn_phone_num"]?></td>
+        <td align="center"><?=$row["order_status"]?></td>
         <td align="center"><?=$droptime?></td>
       </tr>
     <?php }} ?>   
