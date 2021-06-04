@@ -66,6 +66,7 @@ $datacheck = $track->checkHistory($cus_id);
     <tr style="border-bottom: 1px solid black;height: 8%"> <hr>
         <td align="center">Date</td>
         <td align="center">Product Name</td>
+        <td align="center">Product Image</td>
         <td align="center">Quantity</td>
         <td align="center">Price (RM)</td>
         <td align="center">Status</td>
@@ -79,13 +80,30 @@ $datacheck = $track->checkHistory($cus_id);
       }
       else{
       foreach($data as $row){ 
+        if($row['product_type'] == "Food"){
+          $image = $row['product_image'];
+          $image_src = "../../images/FoodImages/".$image;
+        }
+        else if($row['product_type'] == "Goods"){
+          $image = $row['product_image'];
+          $image_src = "../../images/GoodsImages/".$image;
+        }
+        else if($row['product_type'] == "Medicine"){
+          $image = $row['product_image'];
+          $image_src = "../../images/MedicineImages/".$image;
+        }
+        else if($row['product_type'] == "Pet"){
+          $image = $row['product_image'];
+          $image_src = "../../images/PetImages/".$image;
+        }
     ?>
       <tr>
         <td align="center"><?=$row["order_time"]?></td>
         <td align="center"><?=$row["product_name"]?></td>
+        <td align="center" width="20%"><img src="<?php echo $image_src?>" style="width: 100px;height: 100px;vertical-align: middle;"></td>
         <td align="center"><?=$row["product_quantity"]?></td>
         <td align="center">RM <?=$row["product_price"]?></td>
-        <td align="center"><?=$row["status"]?></td>
+        <td align="center"><?=$row["order_status"]?></td>
       </tr>
     <?php }} ?>   
   </table>   

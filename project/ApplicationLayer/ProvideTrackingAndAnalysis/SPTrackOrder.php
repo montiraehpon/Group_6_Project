@@ -66,10 +66,14 @@ $datacheck = $track->checkSPOrder($sp_id);
   <table id="scd_detail" width="70%" height="70%" align="center" rules="all">
     <tr style="border-bottom: 1px solid black;height: 8%"> <hr>
         <td align="center">Purchased Date</td>
+        <td align="center">Customer Name</td>
+        <td align="center">Customer Phone</td>
         <td align="center">Product Name</td>
         <td align="center">Quantity</td>
         <td align="center">Status</td>
-        <td align="center">Time</td>
+        <td align="center">Runner Name</td>
+        <td align="center">Runner Phone</td>
+        <td align="center">Delivered Time</td>
     </tr>
     <?php
       if($datacheck == 0){
@@ -89,9 +93,13 @@ $datacheck = $track->checkSPOrder($sp_id);
     ?>
       <tr>
         <td align="center"><?=$row["order_time"]?></td>
+        <td align="center"><?=$row["cus_name"]?></td>
+        <td align="center"><?=$row["cus_phone_num"]?></td>
         <td align="center"><?=$row["product_name"]?></td>
         <td align="center"><?=$row["product_quantity"]?></td>
-        <td align="center"><?=$row["status"]?></td>
+        <td align="center"><?=$row["order_status"]?></td>
+        <td align="center"><?=$row["rn_name"]?></td>
+        <td align="center"><?=$row["rn_phone_num"]?></td>
         <td align="center"><?=$droptime?></td>
       </tr>
     <?php }} ?>   

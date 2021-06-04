@@ -36,15 +36,15 @@ class trackModel{
 
     //check delivery list//
     function checkList(){
-        $sql = "select sp_id from ordered where not status=:status group by sp_id";
-        $args = [':status'=>$this->status];
+        $sql = "select sp_id from ordered where not order_status=:order_status group by sp_id";
+        $args = [':order_status'=>$this->status];
         return $this->run($sql,$args);
     }
 
     //check delivery list//
     function checkDate(){
-        $sql = "select sp_id from ordered where status=:status group by sp_id";
-        $args = [':status'=>$this->status];
+        $sql = "select sp_id from ordered where order_status=:order_status group by sp_id";
+        $args = [':order_status'=>$this->status];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
         return $count;
@@ -52,8 +52,8 @@ class trackModel{
 
     //check delivery detail//
     function viewDeliveryDetail(){
-        $sql = "select ordered.product_name, ordered.product_quantity, customer.cus_address, customer.phone_num from ordered, customer where ordered.cus_id=customer.cus_id and ordered.sp_id=:sp_id and not status=:status";
-        $args = [':sp_id'=>$this->sp_id, ':status'=>$this->status];
+        $sql = "select ordered.product_name, ordered.product_quantity, customer.cus_address, customer.cus_phone_num from ordered, customer where ordered.cus_id=customer.cus_id and ordered.sp_id=:sp_id and not order_status=:order_status";
+        $args = [':sp_id'=>$this->sp_id, ':order_status'=>$this->status];
         return $this->run($sql,$args);
     }
 
@@ -66,8 +66,8 @@ class trackModel{
 
     //accept delivery//
     function acceptDelivery(){
-        $sql = "update ordered set order_droptime=:order_droptime, rn_id=:rn_id, status=:status where sp_id=:sp_id and not status=:doneStatus";
-        $args = [':order_droptime'=>$this->date, ':rn_id'=>$this->rn_id, ':status'=>$this->status , ':sp_id'=>$this->sp_id, ':doneStatus'=>$this->doneStatus];
+        $sql = "update ordered set order_droptime=:order_droptime, rn_id=:rn_id, order_status=:order_status where sp_id=:sp_id and not order_status=:doneStatus";
+        $args = [':order_droptime'=>$this->date, ':rn_id'=>$this->rn_id, ':order_status'=>$this->status , ':sp_id'=>$this->sp_id, ':doneStatus'=>$this->doneStatus];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
         return $count;
@@ -75,15 +75,15 @@ class trackModel{
 
     //view status//
     function viewStatus(){
-        $sql = "select ordered.product_name, ordered.product_quantity, customer.cus_address, customer.phone_num from ordered, customer where ordered.cus_id=customer.cus_id and ordered.rn_id=:rn_id and not status=:status";
-        $args = [':rn_id'=>$this->rn_id, ':status'=>$this->status];
+        $sql = "select ordered.product_name, ordered.product_quantity, customer.cus_address, customer.cus_phone_num from ordered, customer where ordered.cus_id=customer.cus_id and ordered.rn_id=:rn_id and not order_status=:order_status";
+        $args = [':rn_id'=>$this->rn_id, ':order_status'=>$this->status];
         return $this->run($sql,$args);
     }
 
     //get service provider data//
     function getSP(){
-        $sql = "select sp_id from ordered where rn_id=:rn_id and not status=:status";
-        $args = [':rn_id'=>$this->rn_id,':status'=>$this->status];
+        $sql = "select sp_id from ordered where rn_id=:rn_id and not order_status=:order_status";
+        $args = [':rn_id'=>$this->rn_id,':order_status'=>$this->status];
         $stmt = $this->run($sql, $args);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -93,8 +93,8 @@ class trackModel{
 
     //get runner data//
     function getRunner(){
-        $sql = "select * from ordered where rn_id=:rn_id and not status=:status";
-        $args = [':rn_id'=>$this->rn_id, ':status'=>$this->status];
+        $sql = "select * from ordered where rn_id=:rn_id and not order_status=:order_status";
+        $args = [':rn_id'=>$this->rn_id, ':order_status'=>$this->status];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
         return $count;
@@ -102,7 +102,7 @@ class trackModel{
 
     //get runner data//
     function getComplete(){
-        $sql = "select * from ordered where rn_id=:rn_id and status=:status or status=:status2";
+        $sql = "select * from ordered where rn_id=:rn_id and order_status=:status or order_status=:status2";
         $args = [':rn_id'=>$this->rn_id, ':status'=>$this->status, ':status2'=>$this->status2];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
@@ -111,7 +111,7 @@ class trackModel{
 
     //update delivery//
     function updateDelivery(){
-        $sql = "update ordered set status=:status, order_droptime=:order_droptime where rn_id=:rn_id and sp_id=:sp_id and not status=:doneStatus";
+        $sql = "update ordered set order_status=:status, order_droptime=:order_droptime where rn_id=:rn_id and sp_id=:sp_id and not order_status=:doneStatus";
         $args = [':status'=>$this->status, ':order_droptime'=>$this->date, ':rn_id'=>$this->rn_id, ':sp_id'=>$this->sp_id, ':doneStatus'=>$this->doneStatus];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
@@ -129,15 +129,15 @@ class trackModel{
 
     //view order//
     function viewOrder(){
-        $sql = "select * from ordered where cus_id=:cus_id order by order_id ASC ";
+        $sql = "select * from ((ordered inner join sp on ordered.sp_id = sp.sp_id) inner join runner on ordered.rn_id = runner.rn_id) where cus_id=:cus_id order by order_id ASC ";
         $args = [':cus_id'=>$this->cus_id];
         return $this->run($sql, $args);
     }
 
     //check history//
     function checkHistory(){
-        $sql = "select * from ordered where cus_id=:cus_id and status=:status";
-        $args = [':cus_id'=>$this->cus_id, ':status'=>$this->status];
+        $sql = "select * from ordered where cus_id=:cus_id and order_status=:order_status";
+        $args = [':cus_id'=>$this->cus_id, ':order_status'=>$this->status];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
         return $count;
@@ -145,8 +145,8 @@ class trackModel{
 
     //view history//
     function viewHistory(){
-        $sql = "select * from ordered where cus_id=:cus_id and status=:status order by order_id ASC ";
-        $args = [':cus_id'=>$this->cus_id, ':status'=>$this->status];
+        $sql = "select * from ordered where cus_id=:cus_id and order_status=:order_status order by order_id ASC ";
+        $args = [':cus_id'=>$this->cus_id, ':order_status'=>$this->status];
         return $this->run($sql, $args);
     }
 
@@ -161,14 +161,14 @@ class trackModel{
 
     //service provider view order//
     function viewSPOrder(){
-        $sql = "select * from ordered where sp_id=:sp_id order by order_id ASC ";
+        $sql = "select * from ((ordered inner join customer on ordered.cus_id = customer.cus_id) inner join runner on ordered.rn_id = runner.rn_id) where sp_id=:sp_id order by order_id ASC ";
         $args = [':sp_id'=>$this->sp_id];
         return $this->run($sql, $args);
     }
 
     //check service provider history//
     function checkSPHistory(){
-        $sql = "select * from ordered where sp_id=:sp_id and status=:status";
+        $sql = "select * from ordered where sp_id=:sp_id and order_status=:status";
         $args = [':sp_id'=>$this->sp_id, ':status'=>$this->status];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
@@ -177,7 +177,7 @@ class trackModel{
 
     //view history//
     function viewSPHistory(){
-        $sql = "select * from ordered where sp_id=:sp_id and status=:status order by order_id ASC ";
+        $sql = "select * from ordered where sp_id=:sp_id and order_status=:status order by order_id ASC ";
         $args = [':sp_id'=>$this->sp_id, ':status'=>$this->status];
         return $this->run($sql, $args);
     }
@@ -190,7 +190,7 @@ class trackModel{
     }
 
     function food_rpt_check(){
-        $sql = "select * from ordered where sp_id=:sp_id and product_type=:product_type";
+        $sql = "select product_id from ordered where sp_id=:sp_id and product_type=:product_type";
         $args = [':sp_id'=>$this->sp_id, ':product_type'=>$this->type];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
@@ -205,7 +205,7 @@ class trackModel{
     }
 
     function goods_rpt_check(){
-        $sql = "select * from ordered where sp_id=:sp_id and product_type=:product_type";
+        $sql = "select product_id from ordered where sp_id=:sp_id and product_type=:product_type";
         $args = [':sp_id'=>$this->sp_id, ':product_type'=>$this->type];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
@@ -220,7 +220,7 @@ class trackModel{
     }
 
     function med_rpt_check(){
-        $sql = "select * from ordered where sp_id=:sp_id and product_type=:product_type";
+        $sql = "select product_id from ordered where sp_id=:sp_id and product_type=:product_type";
         $args = [':sp_id'=>$this->sp_id, ':product_type'=>$this->type];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
@@ -235,7 +235,7 @@ class trackModel{
     }
 
     function pet_rpt_check(){
-        $sql = "select * from ordered where sp_id=:sp_id and product_type=:product_type";
+        $sql = "select product_id from ordered where sp_id=:sp_id and product_type=:product_type";
         $args = [':sp_id'=>$this->sp_id, ':product_type'=>$this->type];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
@@ -244,13 +244,13 @@ class trackModel{
 
     //Runner Report//
     function rn_rpt(){
-        $sql = "select * from ordered where rn_id=:rn_id and status=:status order by order_id ASC";
+        $sql = "select * from ((ordered inner join customer on ordered.cus_id = customer.cus_id) inner join sp on ordered.sp_id = sp.sp_id) where rn_id=:rn_id and order_status=:status order by order_id ASC";
         $args = [':rn_id'=>$this->rn_id, ':status'=>$this->status];
         return $this->run($sql, $args);
     }
 
     function rn_rpt_check(){
-        $sql = "select * from ordered where rn_id=:rn_id and status=:status";
+        $sql = "select * from ordered where rn_id=:rn_id and order_status=:status";
         $args = [':rn_id'=>$this->rn_id, ':status'=>$this->status];
         $stmt = $this->run($sql, $args);
         $count = $stmt->rowCount();
